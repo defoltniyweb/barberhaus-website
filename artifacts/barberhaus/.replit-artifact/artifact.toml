@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "BARBERHAUS"
+description = "A premium German-language concept website for BARBERHAUS, a fictional barbershop in Karlsruhe, with services, gallery, opening hours, contact and clearly non-binding booking requests."
+version = "1.0.0"
+id = "artifacts/barberhaus"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25324
+
+[services.development]
+run = "pnpm --filter @workspace/barberhaus run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/barberhaus", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/barberhaus/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25324"
+BASE_PATH = "/"
